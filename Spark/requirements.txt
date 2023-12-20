@@ -1,0 +1,4 @@
+pyspark~=3.5.0
+python-dotenv~=1.0.0
+geolib~=1.0.7
+opencage~=2.4.0
