@@ -22,6 +22,8 @@ def unzip_files(src_path: Path, dst_path: Path) -> None:
     # Creating the destination directory if it doesn't exist
     dst_path.mkdir(parents=True, exist_ok=True)
     # Iterating through the folder with the zip files and extracting them one by one to the destination folder
+    if not src_path.exists():
+        raise FileNotFoundError('Source files does not exist')
     for file in src_path.iterdir():
         zip_file = ZipFile(file)
         zip_members = zip_file.namelist()
@@ -37,10 +39,15 @@ def fill_null_lat_lng(city: StringType(), country: StringType()) -> ArrayType(Do
     :param country: Name of the country
     :return: array containing latitude and longitude coordinates obtained from the geocoding service
     """
-    response = geocoder.geocode(f'{city},{country}', limit=1)
-    geometry = response[0]['geometry']
-    new_lat, new_lng = geometry['lat'], geometry['lng']
-    return new_lat, new_lng
+    try:
+        response = geocoder.geocode(f'{city},{country}', limit=1)
+        geometry = response[0]['geometry']
+        new_lat, new_lng = geometry['lat'], geometry['lng']
+    except Exception as e:
+        print('Something went wrong')
+        raise e
+    else:
+        return new_lat, new_lng
 
 
 @udf()

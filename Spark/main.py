@@ -23,9 +23,19 @@ def get_restaurant_df(spark: SparkSession, src_path: str) -> DataFrame:
     na_restaurant_df = (na_restaurant_df
                         .withColumn('lat', fill_null_lat_lng(col('city'), col('country'))[0])
                         .withColumn('lng', fill_null_lat_lng(col('city'), col('country'))[1]))
-    # Fill NA values and compute geohash based on latitude and longitude
+    # Fill NA values for lat and lng values
+    restaurant_df = restaurant_df.join(na_restaurant_df, on='id', how='left').select(
+        restaurant_df['id'],
+        restaurant_df['franchise_id'],
+        restaurant_df['franchise_name'],
+        restaurant_df['restaurant_franchise_id'],
+        restaurant_df['country'],
+        restaurant_df['city'],
+        na_restaurant_df['lat'],
+        na_restaurant_df['lng']
+    )
+    # Compute geohash based on latitude and longitude
     restaurant_df = (restaurant_df
-                     .fillna(na_restaurant_df.select('lat', 'lng').collect()[0].asDict())
                      .withColumn('geohash', get_geohash(col('lat'), col('lng'))))
     return restaurant_df
 
@@ -88,6 +98,7 @@ def main() -> None:
              .appName('Spark HW')
              .config('spark.driver.memory', '5g')
              .config("spark.sql.execution.arrow.pyspark.enabled", True)
+             .config('spark.sql.shuffle.partitions', 4)
              .getOrCreate())
 
     restaurant_df = get_restaurant_df(spark, str(SRC_RESTAURANT_PATH))
