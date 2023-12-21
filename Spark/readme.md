@@ -1,7 +1,7 @@
 # EPAM BIG DATA - SPARK PRACTICE
 
 Spark practice solution implemented using PySpark  
-[]()
+[Project Link](https://github.com/daurepchik/epam_big_data/tree/main/Spark)
 
 ### Prerequisites
 #### Install modules using pip
