@@ -6,12 +6,13 @@ import dotenv
 dotenv.load_dotenv()
 
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path(__file__).resolve().parent
 GEO_API_KEY = os.getenv('GEO_API_KEY', None)
 if not GEO_API_KEY:
     raise ValueError('GEO_API_KEY is required')
 
 SRC_RESTAURANT_PATH = ROOT_DIR / 'data' / 'restaurant'
+RAW_WEATHER_PATH = ROOT_DIR / 'raw_data' / 'the_weather'
 SRC_WEATHER_PATH = ROOT_DIR / 'data' / 'weather'
 DST_PATH = ROOT_DIR / 'data' / 'weather_restaurant'
 

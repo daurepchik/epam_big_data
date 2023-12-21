@@ -7,7 +7,7 @@ from opencage.geocoder import OpenCageGeocode
 from pyspark.sql.functions import udf
 from pyspark.sql.types import ArrayType, DoubleType, StringType
 
-from settings import GEO_API_KEY
+from settings import GEO_API_KEY, RAW_WEATHER_PATH, SRC_WEATHER_PATH
 
 geocoder = OpenCageGeocode(GEO_API_KEY)
 
@@ -59,3 +59,7 @@ def get_geohash(lat: DoubleType(), lng: DoubleType()) -> StringType():
     :return: 4 character long geohash string
     """
     return geohash.encode(lat, lng, 4)
+
+
+if __name__ == '__main__':
+    unzip_files(RAW_WEATHER_PATH, SRC_WEATHER_PATH)

@@ -97,6 +97,7 @@ def main() -> None:
              .master('local[*]')
              .appName('Spark HW')
              .config('spark.driver.memory', '5g')
+             .config('spark.executor.memory', '5g')
              .config("spark.sql.execution.arrow.pyspark.enabled", True)
              .config('spark.sql.shuffle.partitions', 4)
              .getOrCreate())

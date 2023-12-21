@@ -28,7 +28,7 @@ python main.py
    - Download `restaurant` data and unzip it manually to `data/restaurant` directory
 2. Prepare weather data
    - Download `weather` data and put it to `the_weather` folder (as on image above)
-   - Run function utils.unzip_files() with the data
+   - Run `python utils.py`
 #### 2. Task implementation
 1. Implementing UDFs
    - `utils.fill_null_lat_lng()` function accepts city and country parameters and returns 
@@ -49,3 +49,6 @@ python main.py
    - `main.export_joined_df()` function left joins weather data with restaurant data
    - Partitions data by year, month, day and 
    exports the joined data to the `data/weather_restaurant` folder in PARQUET format
+#### 3. Tests run
+   - run `python test_pyspark.py`
+   - If 'Tests passed' is printed, then tests are passed. Otherwise, tests are not passed
